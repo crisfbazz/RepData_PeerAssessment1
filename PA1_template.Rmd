@@ -8,6 +8,14 @@ output:
 
 ## Loading and preprocessing the data
 
+  Read the data and convert the date column to a date type and the inverval column
+to a factor type.
+
+```{r, echo=TRUE}
+activity <- read.csv("activity.csv", nrows = 17568)
+activity$date <- as.POSIXct(activity$date)
+activity$interval <- as.factor(activity$interval)
+```
 
 
 ## What is mean total number of steps taken per day?
