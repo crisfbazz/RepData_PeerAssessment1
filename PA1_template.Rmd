@@ -21,6 +21,17 @@ activity$interval <- as.factor(activity$interval)
 ## What is mean total number of steps taken per day?
 
 
+```{r, echo=TRUE}
+total_steps <- tapply(activity$steps,activity$date, sum, na.rm = TRUE)
+hist(total_steps)
+
+mean_steps <- tapply(activity$steps,activity$date, mean, na.rm = TRUE)
+median_steps <- tapply(activity$steps,activity$date, median, na.rm = TRUE)
+
+mean_steps
+median_steps
+```
+
 
 ## What is the average daily activity pattern?
 
