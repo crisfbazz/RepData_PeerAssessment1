@@ -92,3 +92,24 @@ Comparing the results of the filled data with the original data, we can see that
 The estimates of the total daily number of steps increased.
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+Creates a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
+
+```{r, echo=TRUE}
+library(dplyr)
+library(reshape2)
+
+activityFill <- mutate( activityFill, day_type = factor( (weekdays(activityFill$date) %in% c("domingo","sabado")), labels = c("weekday", "weekend") ) )
+```
+
+Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). 
+
+```{r, echo=TRUE}
+mean_stepsFillday <- tapply(activityFill$steps,activityFill[,3:4], mean, na.rm = TRUE)
+mean_stepsFillday <- melt(mean_stepsFillday, measure.vars = c("weekday","weekend"), value.name="steps")
+
+library(ggplot2)
+ggplot(aes(interval, steps), data = mean_stepsFillday) + geom_line() + facet_wrap(~day_type, ncol = 1)
+```
+
+
